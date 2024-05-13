@@ -10,7 +10,6 @@ from .connection_item import ConnectionItem
 from .dqw_item import DQWItem
 from .exceptions import UnpopulatedPropertyError
 from .permissions_item import Permission
-from .property_decorators import property_not_nullable
 from .tag_item import TagItem
 
 
@@ -20,7 +19,7 @@ class FlowItem(object):
             self._id, self.name, self.description, self.project_id, self.created_at
         )
 
-    def __init__(self, project_id: str, name: Optional[str] = None) -> None:
+    def __init__(self, project_id: Optional[str], name: Optional[str] = None) -> None:
         self._webpage_url: Optional[str] = None
         self._created_at: Optional[datetime.datetime] = None
         self._id: Optional[str] = None
@@ -29,7 +28,7 @@ class FlowItem(object):
         self._updated_at: Optional[datetime.datetime] = None
         self.name: Optional[str] = name
         self.owner_id: Optional[str] = None
-        self.project_id: str = project_id
+        self.project_id: Optional[str] = project_id
         self.tags: Set[str] = set()
         self.description: Optional[str] = None
 
@@ -75,7 +74,6 @@ class FlowItem(object):
         return self._project_id
 
     @project_id.setter
-    @property_not_nullable
     def project_id(self, value: str) -> None:
         self._project_id = value
 
